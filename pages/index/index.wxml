@@ -1,0 +1,54 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="weui-box">
+    <view class="weui-box-head">小程序SDK基本信息</view>
+    <view class="weui-form">
+      <view class="weui-form-item">
+        <text class="weui-label">上报地址</text>
+        <text class="weui-input">dttob.testsite.woa.com</text>
+      </view>
+      <view class="weui-form-item">
+        <text class="weui-label">数据资源名</text>
+        <text class="weui-input">weapp-app</text>
+      </view>
+      <view class="weui-form-item">
+        <text class="weui-label">Appkey</text>
+        <text class="weui-input">{{appkey}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="weui-box">
+    <view class="weui-box-head">页面基本信息</view>
+    <view class="weui-form">
+      <view class="weui-form-item">
+        <text class="weui-label">首页</text>
+        <text class="weui-input">pages/index/index</text>
+      </view>
+      <view class="weui-form-item">
+        <text class="weui-label">数据上报页</text>
+        <text class="weui-input">pages/pageB/index</text>
+      </view>
+      <view class="weui-form-item">
+        <text class="weui-label">日志页</text>
+        <text class="weui-input">pages/pageC/index</text>
+      </view>
+    </view>
+  </view>
+  <view class="weui-box weui-box_active">
+    <view class="weui-box-head">数据上报</view>
+    <view class="weui-form">
+      <view class="weui-form-item">
+        <text class="weui-label">事件名称</text>
+        <input class="weui-input weui-input_line" model:value="{{eventCode}}" placeholder="必填"/>
+      </view>
+      <view class="weui-form-item">
+        <text class="weui-label">自定义参数</text>
+        <input class="weui-input weui-input_line" model:value="{{customParam}}" placeholder='选填,例{"name": "Tom"}'/>
+      </view>
+      <view class="operate">
+        <button size="mini" class="weui-button" bindtap="bindCustomEventReport">点击上报</button>
+      </view>
+    </view>
+  </view>
+ 
+</view>

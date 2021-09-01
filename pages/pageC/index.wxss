@@ -1,0 +1,7 @@
+/* pages/pageC/index.wxss */
+.empty {
+  font-size: 36px;
+  text-align: center;
+  margin: auto;
+  padding-top: 100px;
+}

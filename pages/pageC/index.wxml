@@ -1,0 +1,4 @@
+<!--pages/pageC/index.wxml-->
+<view class="empty">
+  <text>页面C</text>
+</view>
