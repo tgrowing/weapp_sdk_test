@@ -1,5 +1,8 @@
 <!--pages/pageB/index.wxml-->
 <view class="empty">
-  <text>页面B</text>
+  <text>预置事件相关</text>
+  <view>
+    <button open-type="share">分享</button>
+  </view>
 </view>
 

@@ -10,24 +10,24 @@ var fail = e => {
 };
 
 var beacon = new BeaconAction({
-  appkey: 'KSPOLJTM3Z9A4AL1', //小程序appKey，从灯塔官网获取,必填
+  appkey: 'KTMWLGR42K1V4PCV', //小程序appKey，从灯塔官网获取,必填
   versionCode: '  ', //小程序版本号，选填
   channelID: 'beacon-mp-sdk-test', //小程序渠道号，选填
   openid: '', // 用户标示符号，选填
-  reportUrl: 'https://otheve.beacon.qq.com/analytics/upload?tp=weapp', // 上报URL, 选填
+  reportUrl: 'http://129.204.58.240:31000/logserver/analytics/upload?tp=js', // 上报URL, 选填
   unionid: 'unionid', // 用户唯一标示符号，选填
-  isDebug :false ,//是否测试环境，选填
-  delay: 2000, // 普通事件延迟上报时间(单位毫秒), 默认2000(2秒),选填
+  isDebug : false ,//是否测试环境，选填
+  delay: 70000, // 普通事件延迟上报时间(单位毫秒), 默认2000(2秒),选填
   onPullDownRefresh: true,//下拉刷新事件统计，默认开启，选填
   onReachBottom: true,//页面下拉触底统计，默认开启，选填
   onReportSuccess: success, // 上报成功回调，选填
   onReportFail: fail, // 上报失败回调，选填
 });
 
-beacon.setCusHeaders({
-  paasid: "zgt_dev_api",
-  paastoken: "KGuC1nFvOpP1otrPgF43IxJaM6bPD8ZJ",
-})
+// beacon.setCusHeaders({
+//   paasid: "zgt_dev_api",
+//   paastoken: "KGuC1nFvOpP1otrPgF43IxJaM6bPD8ZJ",
+// })
 
 Page({
   data: {
@@ -38,30 +38,11 @@ Page({
     canIUseGetUserProfile: false,
     canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName'), // 如需尝试获取用户信息可改为f
     // sdk
-    reportUrl: 'http://129.204.58.230:31000/analytics/upload?tp=weapp',
+    reportUrl: 'https://otheveddd.beacon.qq.com/analytics/upload?tp=weapp',
     appkey: 'KSPOLJTM3Z9A4AL1',
     eventCode: '',
     customParam: ''
   },
-  // 事件处理函数
-  
-  initSDK() {
-    beacon = new BeaconAction({
-      appkey: this.data.appkey, //小程序appKey，从灯塔官网获取,必填
-      versionCode: 'versionCode', //小程序版本号，选填
-      channelID: '', //小程序渠道号，选填
-      openid: '', // 用户标示符号，选填
-      reportUrl: this.data.reportUrl, // 上报URL, 选填
-      unionid: 'unionid', // 用户唯一标示符号，选填
-      isDebug :false ,//是否测试环境，选填
-      delay: 2000, // 普通事件延迟上报时间(单位毫秒), 默认2000(2秒),选填
-      onPullDownRefresh: true,//下拉刷新事件统计，默认开启，选填
-      onReachBottom: true,//页面下拉触底统计，默认开启，选填
-      onReportSuccess: success, // 上报成功回调，选填
-      onReportFail: fail, // 上报失败回调，选填
-    });
-  },
-
   bindCustomEventReport() {
     if (this.data.customParam) {
       beacon.onDirectUserAction(this.data.eventCode, JSON.parse(this.data.customParam));
@@ -81,9 +62,25 @@ Page({
       this.setData({
         canIUseGetUserProfile: true
       })
-
     }
   },
+
+  // 转发
+  onShareAppMessage() {
+    const promise = new Promise(resolve => {
+      setTimeout(() => {
+        resolve({
+          title: '自定义转发标题'
+        })
+      }, 2000)
+    })
+    return {
+      title: '自定义转发标题',
+      path: '/page/user?id=123',
+      promise 
+    }
+  },
+  
   getUserProfile(e) {
     // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
     wx.getUserProfile({
