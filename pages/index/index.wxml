@@ -50,5 +50,10 @@
       </view>
     </view>
   </view>
- 
+  <view class="weui-box weui-box_active">
+    <view class="weui-box-head">预置事件-分享（点击右上角或按钮触发）</view>
+    <view class="operate">
+      <button size="mini" class="weui-button" open-type="share">点击分享</button>
+    </view>
+  </view>
 </view>
