@@ -22,8 +22,8 @@ Page({
     canIUseGetUserProfile: false,
     canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName'), // 如需尝试获取用户信息可改为f
     // sdk
-    reportUrl: 'https://report.growth.qq.com/logserver/analytics/upload?tp=weapp',
-    appkey: 'L1ZVZI9M47114KTK',
+    reportUrl: '',
+    appkey: '',
     newAppkey: '',
     eventCode: '',
     customParam: '',

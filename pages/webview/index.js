@@ -15,7 +15,6 @@ Page({
    */
   onLoad: function (options) {
     // const uin = app.globalData.beacon.getDeviceId();
-    const url = '://resource.growth.qq.com/sdk/demo1/dist/index.html'
     // const webviewSrc = app.globalData.beacon.setWebViewUrl(url);
     const webviewSrc = 'http://localhost:8081/';
     console.log(webviewSrc)
