@@ -1,7 +1,7 @@
 <!--pages/pageC/index.wxml-->
 <view class="empty">
-  <text>页面C</text>
+  <text>页面A</text>
   <view>
-    <button bindtap="goBack">返回上一页</button>
+    <button bindtap="goPageC">打开页面C</button>
   </view>
 </view>

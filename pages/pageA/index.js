@@ -33,14 +33,14 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    console.log('hide B');
+    console.log('hide A');
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    console.log('unload B');
+    console.log('unload A');
   },
 
   /**
@@ -63,9 +63,9 @@ Page({
   onShareAppMessage: function () {
 
   },
-  goBack() {
-    wx.navigateBack({
-      delta: 1,
+  goPageC() {
+    wx.navigateTo({
+      url: '../pageC/index'
     })
   }
 })

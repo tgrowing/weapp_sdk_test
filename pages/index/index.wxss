@@ -38,6 +38,7 @@
 .weui-button {
   color: #fff;
   background: #0e73ff;
+  margin-right: 5px;
 }
 .weui-button:active {
   color: #fff;

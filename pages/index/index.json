@@ -1,4 +1,5 @@
 {
   "usingComponents": {},
-  "navigationBarTitleText": "灯塔小程序sdk"
+  "navigationBarTitleText": "灯塔小程序sdk",
+  "enablePullDownRefresh": true
 }

@@ -1,33 +1,17 @@
 // index.js
 // 获取应用实例
-const app = getApp()
+const app = getApp();
 const BeaconAction = require('../../utils/tgp_mini_sdk.min.js');
 var success = e => {
   console.log('onReportSuccess : ' + e);
 };
 var fail = e => {
   console.log('onReportFail : ' + e);
+  wx.showToast({
+    title: '事件上报失败',
+    icon: 'error',
+  });
 };
-
-var beacon = new BeaconAction({
-  appkey: 'KTMWLGR42K1V4PCV', //小程序appKey，从灯塔官网获取,必填
-  versionCode: '  ', //小程序版本号，选填
-  channelID: 'beacon-mp-sdk-test', //小程序渠道号，选填
-  openid: '', // 用户标示符号，选填
-  reportUrl: 'http://129.204.58.240:31000/logserver/analytics/upload?tp=js', // 上报URL, 选填
-  unionid: 'unionid', // 用户唯一标示符号，选填
-  isDebug : false ,//是否测试环境，选填
-  delay: 70000, // 普通事件延迟上报时间(单位毫秒), 默认2000(2秒),选填
-  onPullDownRefresh: true,//下拉刷新事件统计，默认开启，选填
-  onReachBottom: true,//页面下拉触底统计，默认开启，选填
-  onReportSuccess: success, // 上报成功回调，选填
-  onReportFail: fail, // 上报失败回调，选填
-});
-
-// beacon.setCusHeaders({
-//   paasid: "zgt_dev_api",
-//   paastoken: "KGuC1nFvOpP1otrPgF43IxJaM6bPD8ZJ",
-// })
 
 Page({
   data: {
@@ -38,16 +22,61 @@ Page({
     canIUseGetUserProfile: false,
     canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName'), // 如需尝试获取用户信息可改为f
     // sdk
-    reportUrl: 'https://otheveddd.beacon.qq.com/analytics/upload?tp=weapp',
-    appkey: 'KSPOLJTM3Z9A4AL1',
+    reportUrl: 'https://report.growth.qq.com/logserver/analytics/upload?tp=weapp',
+    appkey: 'L1ZVZI9M47114KTK',
+    newAppkey: '',
     eventCode: '',
-    customParam: ''
+    customParam: '',
+    initFlag: true
+  },
+  initSDK() {
+    app.globalData.beacon = new BeaconAction({
+      appkey: this.data.appkey, //小程序appKey，从灯塔官网获取,必填
+      channelID: 'beacon-mp-sdk-test', //小程序渠道号，选填
+      reportUrl: this.data.reportUrl,
+      isDebug : false ,//是否测试环境，选填
+      delay: 70000, // 普通事件延迟上报时间(单位毫秒), 默认2000(2秒),选填
+      onPullDownRefresh: true,//下拉刷新事件统计，默认开启，选填
+      onReachBottom: true,//页面下拉触底统计，默认开启，选填
+      onReportSuccess: success, // 上报成功回调，选填
+      onReportFail: fail, // 上报失败回调，选填
+    });  
+    wx.showToast({
+      title: 'sdk初始化成功',
+      icon: 'success',
+    });
+    this.setData({
+      initFlag: true
+    });
   },
   bindCustomEventReport() {
+    if (!app.globalData.beacon) {
+      wx.showToast({
+        title: '请先初始化sdk',
+        icon: 'error',
+      });
+      return;
+    }
+    if (!this.data.eventCode) {
+      wx.showToast({
+        title: '事件名不可为空',
+        icon: 'error',
+      });
+      return;
+    }
     if (this.data.customParam) {
-      beacon.onDirectUserAction(this.data.eventCode, JSON.parse(this.data.customParam));
+      app.globalData.beacon.onDirectUserAction(this.data.eventCode, JSON.parse(this.data.customParam));
     } else {
-      beacon.onDirectUserAction(this.data.eventCode);
+      app.globalData.beacon.onDirectUserAction(this.data.eventCode);
+    }
+  },
+  setAppKey() {
+    if (this.data.newAppkey) {
+      app.globalData.beacon.setAppKey(this.data.newAppkey);
+      wx.showToast({
+        title: 'appkey更新成功',
+        icon: 'success',
+      });
     }
   },
 
@@ -57,12 +86,24 @@ Page({
     })
   },
   onLoad() {
-    beacon.clearCusHeader
     if (wx.getUserProfile) {
       this.setData({
         canIUseGetUserProfile: true
       })
     }
+    // 获取用户信息
+    wx.getSetting({
+      success: res => {
+        if (res.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+          wx.getUserInfo({
+            success: res => {
+              // app.globalData.beacon.setUserInfo(res);//灯塔会获取用户昵称
+            }
+          })
+        }
+      }
+    })
   },
 
   // 转发
@@ -86,7 +127,6 @@ Page({
     wx.getUserProfile({
       desc: '展示用户信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
       success: (res) => {
-        console.log(res)
         this.setData({
           userInfo: res.userInfo,
           hasUserInfo: true
@@ -96,7 +136,6 @@ Page({
   },
   getUserInfo(e) {
     // 不推荐使用getUserInfo获取用户信息，预计自2021年4月13日起，getUserInfo将不再弹出弹窗，并直接返回匿名的用户个人信息
-    console.log(e)
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
@@ -107,4 +146,13 @@ Page({
       url: '../logs/logs'
     })
   },
+  goWebview() {
+    wx.navigateTo({
+      url: '../webview/index?a=1'
+    })
+  },
+  onReachBottom() {
+    // 触发下拉刷新
+    wx.startPullDownRefresh();
+  }
 })

@@ -1,0 +1,4 @@
+<!--pages/pageC/index.wxml-->
+<view class="empty">
+  <web-view model:src="{{webviewUrl}}"></web-view>
+</view>

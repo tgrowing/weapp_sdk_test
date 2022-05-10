@@ -1,18 +1,28 @@
 // pages/pageB/index.js
+const app = getApp();
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    webviewUrl: '',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    // const uin = app.globalData.beacon.getDeviceId();
+    const url = '://resource.growth.qq.com/sdk/demo1/dist/index.html'
+    // const webviewSrc = app.globalData.beacon.setWebViewUrl(url);
+    const webviewSrc = 'http://localhost:8081/';
+    console.log(webviewSrc)
+    this.setData({
+      webviewUrl: webviewSrc
+    });
+    console.log(this.data.webviewUrl)
   },
 
   /**
@@ -33,14 +43,14 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    console.log('hide B');
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    console.log('unload B');
+
   },
 
   /**
@@ -62,10 +72,5 @@ Page({
    */
   onShareAppMessage: function () {
 
-  },
-  goBack() {
-    wx.navigateBack({
-      delta: 1,
-    })
   }
 })
