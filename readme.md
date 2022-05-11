@@ -217,21 +217,27 @@ beacon.onUserAction('testDemoButtonClick', {
 3、运行小程序测试demo
 
 a. 打开微信开发者工具，点击“+”号按钮，弹出【创建小程序】弹窗
+
 ![image.png](https://tencent-growth-platform-1251316161.cos.ap-beijing.myqcloud.com/sdk/images/weapp-sdk-demo/weapp_step6.png)
 
 b. 创建小程序。其中项目名称不做要求，可自定义填写；目录项选择【小程序测试demo】所在文件路径；AppID填写为之前准备阶段中你申请的小程序测试号。
+
 ![image.png](https://tencent-growth-platform-1251316161.cos.ap-beijing.myqcloud.com/sdk/images/weapp-sdk-demo/weapp_step7.png)
 
 c. 点击菜单栏里的“真机调试”后，会弹出调试二维码，通过手机扫码，即可在手机端调起小程序。
+
 ![image.png](https://tencent-growth-platform-1251316161.cos.ap-beijing.myqcloud.com/sdk/images/weapp-sdk-demo/weapp_step15.png)
 
 4、初始化参数填写示例
+
 ![image.png](https://tencent-growth-platform-1251316161.cos.ap-beijing.myqcloud.com/sdk/images/weapp-sdk-demo/weapp_step8.png)
 
 5、事件上报填写示例
+
 ![image.png](https://tencent-growth-platform-1251316161.cos.ap-beijing.myqcloud.com/sdk/images/weapp-sdk-demo/weapp_step9.png)
 
 6、事件上报日志展示
+
 ![image.png](https://tencent-growth-platform-1251316161.cos.ap-beijing.myqcloud.com/sdk/images/weapp-sdk-demo/weapp_step10.png)
 
 
