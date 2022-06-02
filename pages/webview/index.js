@@ -15,8 +15,8 @@ Page({
    */
   onLoad: function (options) {
     // const uin = app.globalData.beacon.getDeviceId();
-    // const webviewSrc = app.globalData.beacon.setWebViewUrl(url);
-    const webviewSrc = 'http://localhost:8081/';
+    const webviewSrc = app.globalData.beacon.setWebViewUrl('https://tencent-growth-platform-1251316161.cos.ap-beijing.myqcloud.com/sdk/web-sdk-demo/dist/index.html#/');
+    // const webviewSrc = 'http://localhost:8080/';
     console.log(webviewSrc)
     this.setData({
       webviewUrl: webviewSrc

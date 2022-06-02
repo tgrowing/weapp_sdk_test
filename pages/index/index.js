@@ -22,12 +22,14 @@ Page({
     canIUseGetUserProfile: false,
     canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName'), // 如需尝试获取用户信息可改为f
     // sdk
+    // reportUrl: 'https://report.growth.qq.com/logserver/analytics/upload?tp=weapp',
     reportUrl: '',
-    appkey: '',
+    appkey: 'L319S5VT2AID4SZI',
     newAppkey: '',
     eventCode: '',
     customParam: '',
-    initFlag: true
+    inited: false,
+    stoped: false,
   },
   initSDK() {
     app.globalData.beacon = new BeaconAction({
@@ -35,7 +37,8 @@ Page({
       channelID: 'beacon-mp-sdk-test', //小程序渠道号，选填
       reportUrl: this.data.reportUrl,
       isDebug : false ,//是否测试环境，选填
-      delay: 70000, // 普通事件延迟上报时间(单位毫秒), 默认2000(2秒),选填
+      delay: this.data.delay || 0, // 普通事件延迟上报时间(单位毫秒), 默认5000(5秒),选填
+      maxDBCount: this.data.maxDBCount || 0, // 存储最大值
       onPullDownRefresh: true,//下拉刷新事件统计，默认开启，选填
       onReachBottom: true,//页面下拉触底统计，默认开启，选填
       onReportSuccess: success, // 上报成功回调，选填
@@ -46,10 +49,57 @@ Page({
       icon: 'success',
     });
     this.setData({
-      initFlag: true
+      inited: true
     });
   },
   bindCustomEventReport() {
+    if (!app.globalData.beacon) {
+      wx.showToast({
+        title: '请先初始化sdk',
+        icon: 'error',
+      });
+      return;
+    }
+    if (!this.data.eventCode) {
+      wx.showToast({
+        title: '事件名不可为空',
+        icon: 'error',
+      });
+      return;
+    }
+    if (this.data.customParam) {
+      app.globalData.beacon.onUserAction(this.data.eventCode, JSON.parse(this.data.customParam));
+    } else {
+      app.globalData.beacon.onUserAction(this.data.eventCode);
+    }
+  },
+  bindCustomEventReportBatch() {
+    if (!app.globalData.beacon) {
+      wx.showToast({
+        title: '请先初始化sdk',
+        icon: 'error',
+      });
+      return;
+    }
+    if (!this.data.eventCode) {
+      wx.showToast({
+        title: '事件名不可为空',
+        icon: 'error',
+      });
+      return;
+    }
+    let i = 0;
+    const count = 500;
+    while(i < count) {
+      if (this.data.customParam) {
+        app.globalData.beacon.onUserAction(this.data.eventCode, JSON.parse(this.data.customParam));
+      } else {
+        app.globalData.beacon.onUserAction(this.data.eventCode);
+      }
+      i++;
+    }
+  },
+  bindCustomRealEventReport() {
     if (!app.globalData.beacon) {
       wx.showToast({
         title: '请先初始化sdk',
@@ -69,6 +119,24 @@ Page({
     } else {
       app.globalData.beacon.onDirectUserAction(this.data.eventCode);
     }
+  },
+  bindStopReport() {
+    app.globalData.beacon.stopReport();
+    this.setData({
+      stoped: true
+    });
+  },
+  bindStopReportIM() {
+    app.globalData.beacon.stopReport(true);
+    this.setData({
+      stoped: true
+    });
+  },
+  bindResumeReport() {
+    app.globalData.beacon.resumeReport();
+    this.setData({
+      stoped: false
+    });
   },
   setAppKey() {
     if (this.data.newAppkey) {

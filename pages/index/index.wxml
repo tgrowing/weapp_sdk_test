@@ -32,10 +32,29 @@
       <view class="weui-form-item">
         <text class="weui-label">上报域名</text>
         <!-- <text class="weui-input">{{appkey}}</text> -->
-        <input class="weui-input weui-input_line" model:value="{{reportUrl}}" placeholder="必填"/>
+        <input class="weui-input weui-input_line" model:value="{{reportUrl}}" placeholder="选填（默认为SAAS线上地址）"/>
+      </view>
+      <view class="weui-form-item">
+        <text class="weui-label">open id</text>
+        <input class="weui-input weui-input_line" model:value="{{openId}}" placeholder="选填"/>
+      </view>
+      <view class="weui-form-item">
+        <text class="weui-label">delay</text>
+        <input class="weui-input weui-input_line" model:value="{{delay}}" placeholder="选填"/>
+      </view>
+      <view class="weui-form-item">
+        <text class="weui-label">maxDBCount</text>
+        <!-- <text class="weui-input">{{appkey}}</text> -->
+        <input class="weui-input weui-input_line" model:value="{{maxDBCount}}" placeholder="选填"/>
+      </view>
+      <view>
+        <view>注1: delay - 普通事件延迟上报时间，单位ms, 默认5s</view>
+        <view>注2: maxDBCount - 事件最大存储条数，单位个, 默认10000</view>
+      </view>
+      <view class="weui-form-item">
       </view>
       <view class="operate">
-        <button size="mini" class="weui-button" bindtap="initSDK" disabled="{{!initFlag}}">初始化sdk</button>
+        <button size="mini" class="weui-button" bindtap="initSDK" disabled="{{inited}}">初始化sdk</button>
       </view>
     </view>
   </view>
@@ -51,7 +70,32 @@
         <input class="weui-input weui-input_line" model:value="{{customParam}}" placeholder='选填,例{"name": "Tom"}'/>
       </view>
       <view class="operate">
-        <button size="mini" class="weui-button" bindtap="bindCustomEventReport">点击上报</button>
+        <button size="mini" class="weui-button" bindtap="bindCustomEventReport">普通上报</button>
+        <button size="mini" class="weui-button" bindtap="bindCustomRealEventReport">实时上报</button>
+        <button size="mini" class="weui-button" bindtap="bindCustomEventReportBatch">普通上报(500条)</button>
+      </view>
+    </view>
+  </view>
+  <view class="weui-box weui-box_active">
+    <view class="weui-box-head">停止事件上报</view>
+    <view class="weui-form">
+      <view class="operate">
+        <button size="mini" class="weui-button" bindtap="bindStopReport" disabled="{{stoped}}">停止事件上报</button>
+        <button size="mini" class="weui-button" bindtap="bindStopReportIM" disabled="{{stoped}}">立即停止事件上报</button>
+      </view>
+      <view>
+        <text>注：停止事件上报指已进入上报队列的事件仍会完成上报</text>
+      </view>
+    </view>
+  </view>
+  <view class="weui-box weui-box_active">
+    <view class="weui-box-head">恢复事件上报</view>
+    <view class="weui-form">
+      <view class="operate">
+        <button size="mini" class="weui-button" bindtap="bindResumeReport" disabled="{{!stoped}}">恢复事件上报</button>
+      </view>
+      <view>
+        <text>注：停止事件上报指已进入上报队列的事件仍会完成上报</text>
       </view>
     </view>
   </view>
@@ -67,12 +111,12 @@
       </view>
     </view>
   </view>
-  <!-- <view class="weui-box weui-box_active">
+  <view class="weui-box weui-box_active">
     <view class="weui-box-head">预置事件-分享（点击右上角或按钮触发）</view>
     <view class="operate">
       <button size="mini" class="weui-button" open-type="share">点击分享</button>
     </view>
-  </view> -->
+  </view>
   <view class="weui-box weui-box_active">
     <view class="weui-box-head">嵌入h5</view>
     <view class="operate">
