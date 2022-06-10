@@ -14,10 +14,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // const uin = app.globalData.beacon.getDeviceId();
-    const webviewSrc = app.globalData.beacon.setWebViewUrl('https://tencent-growth-platform-1251316161.cos.ap-beijing.myqcloud.com/sdk/web-sdk-demo/dist/index.html#/');
-    // const webviewSrc = 'http://localhost:8080/';
-    console.log(webviewSrc)
+    const webviewSrc = app.globalData.beacon.setWebViewUrl('http://localhost:8081/#/');
     this.setData({
       webviewUrl: webviewSrc
     });

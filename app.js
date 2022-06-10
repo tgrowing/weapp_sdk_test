@@ -2,7 +2,7 @@
 var beacon = null;
 // const BeaconAction = require('./utils/tgp_mini_sdk.min.js');
 // beacon = new BeaconAction({
-//   appkey: 'L319S5VT2AID4SZI', //小程序appKey，从灯塔官网获取,必填
+//   appkey: 'appkey', //小程序appKey，从灯塔官网获取,必填
 //   channelID: 'beacon-mp-sdk-test', //小程序渠道号，选填
 //   reportUrl: 'https://report.growth.qq.com/logserver/analytics/upload?tp=weapp',
 //   isDebug : false ,//是否测试环境，选填

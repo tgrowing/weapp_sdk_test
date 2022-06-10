@@ -47,11 +47,17 @@
         <!-- <text class="weui-input">{{appkey}}</text> -->
         <input class="weui-input weui-input_line" model:value="{{maxDBCount}}" placeholder="选填"/>
       </view>
+      <view class="weui-form-item">
+        <text class="weui-label">公共参数key</text>
+          <input class="weui-input_line" model:value="{{commonParamKey}}" placeholder="选填"/>
+      </view>
+      <view class="weui-form-item">
+        <text class="weui-label">公共参数value</text>
+          <input class="weui-input_line" model:value="{{commonParamValue}}" placeholder="选填"/>
+      </view>
       <view>
         <view>注1: delay - 普通事件延迟上报时间，单位ms, 默认5s</view>
         <view>注2: maxDBCount - 事件最大存储条数，单位个, 默认10000</view>
-      </view>
-      <view class="weui-form-item">
       </view>
       <view class="operate">
         <button size="mini" class="weui-button" bindtap="initSDK" disabled="{{inited}}">初始化sdk</button>

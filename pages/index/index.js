@@ -1,7 +1,7 @@
 // index.js
 // 获取应用实例
 const app = getApp();
-const BeaconAction = require('../../utils/tgp_mini_sdk.min.js');
+const BeaconAction = require('../../utils/tgp_mini_sdk_V2.1.1.min.js');
 var success = e => {
   console.log('onReportSuccess : ' + e);
 };
@@ -22,14 +22,15 @@ Page({
     canIUseGetUserProfile: false,
     canIUseOpenData: wx.canIUse('open-data.type.userAvatarUrl') && wx.canIUse('open-data.type.userNickName'), // 如需尝试获取用户信息可改为f
     // sdk
-    // reportUrl: 'https://report.growth.qq.com/logserver/analytics/upload?tp=weapp',
     reportUrl: '',
-    appkey: 'L319S5VT2AID4SZI',
+    appkey: 'appkey',
     newAppkey: '',
     eventCode: '',
     customParam: '',
     inited: false,
     stoped: false,
+    commonParamKey: '',
+    commonParamValue: '',
   },
   initSDK() {
     app.globalData.beacon = new BeaconAction({
@@ -43,7 +44,12 @@ Page({
       onReachBottom: true,//页面下拉触底统计，默认开启，选填
       onReportSuccess: success, // 上报成功回调，选填
       onReportFail: fail, // 上报失败回调，选填
-    });  
+    }); 
+    if (this.data.commonParamKey && this.data.commonParamValue) {
+      const param = {};
+      param[this.data.commonParamKey] = this.data.commonParamValue;
+      app.globalData.beacon.addAdditionalParams(param);
+    }
     wx.showToast({
       title: 'sdk初始化成功',
       icon: 'success',
